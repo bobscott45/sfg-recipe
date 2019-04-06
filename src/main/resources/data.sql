@@ -1,0 +1,20 @@
+INSERT INTO category (description) values ('american');
+INSERT INTO category (description) values ('italian');
+INSERT INTO category (description) values ('mexican');
+INSERT INTO category (description) values ('fast food');
+INSERT INTO category (description) values ('dip');
+INSERT INTO category (description) values ('vegan');
+INSERT INTO category (description) values ('avocado');
+INSERT INTO category (description) values ('dinner');
+INSERT INTO category (description) values ('grill');
+INSERT INTO category (description) values ('chicken');
+INSERT INTO category (description) values ('quick and easy');
+INSERT INTO unit_of_measure (description) values ('teaspoon');
+INSERT INTO unit_of_measure (description) values ('tablespoon');
+INSERT INTO unit_of_measure (description) values ('cup');
+INSERT INTO unit_of_measure (description) values ('pinch');
+INSERT INTO unit_of_measure (description) values ('ounce');
+INSERT INTO unit_of_measure (description) values ('dash');
+INSERT INTO unit_of_measure (description) values ('each');
+INSERT INTO unit_of_measure (description) values ('pint');
+
