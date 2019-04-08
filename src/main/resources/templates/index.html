@@ -6,5 +6,9 @@
 </head>
 <body>
     <h1 th:text="'My Recipes Updated'">Index</h1>
+
+    <ul>
+        <li th:each="recipe : ${recipes}"><span th:text="${recipe.description}">recipe name</span></li>
+    </ul>
 </body>
 </html>
