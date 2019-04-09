@@ -1,9 +1,12 @@
 package dev.bobscott.sfgrecipe.domain;
 
 import javassist.bytecode.ByteArray;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Data
+@EqualsAndHashCode(exclude = {"recipe"})
 @Entity
 public class Notes {
 
@@ -25,27 +28,4 @@ public class Notes {
         this.recipeNotes = recipeNotes;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public Recipe getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNotes() {
-        return recipeNotes;
-    }
-
-    public void setNotes(String recipeNotes) {
-        this.recipeNotes = recipeNotes;
-    }
 }

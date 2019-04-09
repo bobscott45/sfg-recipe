@@ -7,11 +7,13 @@ import dev.bobscott.sfgrecipe.domain.Recipe;
 import dev.bobscott.sfgrecipe.repositories.CategoryRepository;
 import dev.bobscott.sfgrecipe.repositories.RecipeRepository;
 import dev.bobscott.sfgrecipe.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
+@Slf4j
 @Component
 public class DataLoader implements CommandLineRunner {
 
@@ -29,7 +31,7 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
+        log.debug("Loading data...");
         Recipe recipe1 = new Recipe();
         recipe1.setDescription("How to Make Perfect Guacamole");
         recipe1.setSource("Simply Recipes");
