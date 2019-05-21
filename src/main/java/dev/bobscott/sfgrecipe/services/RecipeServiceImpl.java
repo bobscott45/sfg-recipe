@@ -1,12 +1,13 @@
 package dev.bobscott.sfgrecipe.services;
 
 import dev.bobscott.sfgrecipe.domain.Recipe;
+import dev.bobscott.sfgrecipe.dto.RecipeDto;
+import dev.bobscott.sfgrecipe.mappers.RecipeMapper;
 import dev.bobscott.sfgrecipe.repositories.RecipeRepository;
 
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
+
 import java.util.Optional;
 import java.util.Set;
 
@@ -15,22 +16,24 @@ import java.util.Set;
 public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
+    private final RecipeMapper recipeMapper;
 
-    public RecipeServiceImpl(RecipeRepository recipeRepository) {
-        this.recipeRepository=recipeRepository;
+    public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeMapper recipeMapper) {
+        this.recipeRepository = recipeRepository;
+        this.recipeMapper = recipeMapper;
     }
 
     @Override
-    public Set<Recipe> getRecipeList() {
+    public Set<RecipeDto> getRecipeList() {
 
-        return recipeRepository.findAll();
-
+        Set<Recipe> recipes = recipeRepository.findAll();
+        return recipeMapper.recipeSetToDtoSet(recipes);
     }
 
     @Override
-    public Recipe findById(Long id) {
+    public RecipeDto findById(Long id) {
         Optional<Recipe> recipe = recipeRepository.findById(id);
         if(!recipe.isPresent()) throw( new RuntimeException("Recipe not found"));
-        return recipe.get();
+        return recipeMapper.recipeToDto(recipe.get());
     }
 }

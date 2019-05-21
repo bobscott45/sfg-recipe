@@ -2,20 +2,17 @@ package dev.bobscott.sfgrecipe.mappers;
 
 import dev.bobscott.sfgrecipe.domain.*;
 import dev.bobscott.sfgrecipe.dto.CategoryDto;
-import dev.bobscott.sfgrecipe.dto.RecipeDto;
 import dev.bobscott.sfgrecipe.dto.IngredientDto;
 import dev.bobscott.sfgrecipe.dto.NoteDto;
+import dev.bobscott.sfgrecipe.dto.RecipeDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 
-public class RecipeMapperTest {
+public class RecipeToDtoTest {
 
     private Long id;
     private String description;
@@ -52,9 +49,18 @@ public class RecipeMapperTest {
         difficulty = Difficulty.EASY;
     }
 
+    @Test
+    public void mapNullToDto() {
+        assertNull(RecipeMapper.INSTANCE.recipeToDto(null));
+    }
 
     @Test
-    public void shouldMapRecipeToDto() {
+    public void mapEmptyRecipeToDto() {
+        assertNotNull(RecipeMapper.INSTANCE.recipeToDto(new Recipe()));
+    }
+
+    @Test
+    public void mapRecipeToDto() {
         ingredient = new Ingredient();
         ingredient.setId(id);
         note = new Note();
@@ -87,33 +93,6 @@ public class RecipeMapperTest {
         assertEquals(recipe.getIngredients().size(), RecipeDto.getIngredients().size());
         assertEquals(recipe.getNote().getText(), RecipeDto.getNote().getText());
         assertEquals(recipe.getCategories().size(), RecipeDto.getCategories().size());
-    }
-
-    @Test
-    public void shouldMapDtoToRecipe() {
-        ingredientDto = new IngredientDto();
-        ingredientDto.setId(id);
-        noteDto = new NoteDto();
-        noteDto.setId(id);
-        categoryDto = new CategoryDto();
-        categoryDto.setId(id);
-        RecipeDto dto = new RecipeDto();
-        dto.setId(id);
-        dto.setDescription(description);
-        dto.setPrepTime(prepTime);
-        dto.setCookTime(cookTime);
-        dto.setServings(servings);
-        dto.setSource(source);
-        dto.setUrl(url);
-        dto.setDirections(directions);
-        dto.getIngredients().add(ingredientDto);
-        dto.setNote(noteDto);
-        dto.getCategories().add(categoryDto);
-
-        Recipe Recipe = RecipeMapper.INSTANCE.dtoToRecipe(dto);
-
-        assertEquals(id, Recipe.getId());
-        assertEquals(description, Recipe.getDescription());
     }
 
 }

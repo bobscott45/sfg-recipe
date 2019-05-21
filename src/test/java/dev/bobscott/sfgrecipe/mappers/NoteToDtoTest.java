@@ -5,10 +5,10 @@ import dev.bobscott.sfgrecipe.dto.NoteDto;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 
-public class NoteMapperTest {
+public class NoteToDtoTest {
 
     private Long id;
     private String text;
@@ -23,7 +23,17 @@ public class NoteMapperTest {
 
 
     @Test
-    public void shouldMapNoteToDto() {
+    public void mapNullToDto() {
+        assertNull(NoteMapper.INSTANCE.noteToDto(null));
+    }
+
+    @Test
+    public void mapEmptyNoteToDto() {
+        assertNotNull(NoteMapper.INSTANCE.noteToDto(new Note()));
+    }
+
+    @Test
+    public void mapNoteToDto() {
         Note note = new Note();
         note.setText(text);
         note.setId(id);
@@ -32,18 +42,6 @@ public class NoteMapperTest {
 
         assertEquals(id, NoteDto.getId());
         assertEquals(text, NoteDto.getText());
-    }
-
-    @Test
-    public void shouldMapDtoToNote() {
-        NoteDto dto = new NoteDto();
-        dto.setId(id);
-        dto.setText(text);
-
-        Note Note = NoteMapper.INSTANCE.dtoToNote(dto);
-
-        assertEquals(id, Note.getId());
-        assertEquals(text, Note.getText());
     }
 
 }

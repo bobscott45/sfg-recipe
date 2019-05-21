@@ -2,6 +2,7 @@ package dev.bobscott.sfgrecipe.controllers;
 
 import dev.bobscott.sfgrecipe.domain.Recipe;
 
+import dev.bobscott.sfgrecipe.dto.RecipeDto;
 import dev.bobscott.sfgrecipe.services.RecipeService;
 
 import org.junit.Before;
@@ -57,13 +58,16 @@ public class IndexControllerTest {
     @Test
     public void getIndexTest() {
 
-        Set<Recipe> recipes = new HashSet<>();
-        Recipe recipe1 = new Recipe();
+        Set<RecipeDto> recipes = new HashSet<>();
+        RecipeDto recipe1 = new RecipeDto();
         recipe1.setId(1L);
+        recipe1.setDescription("Recipe 1");
         recipes.add(recipe1);
 
-        Recipe recipe2 = new Recipe();
+
+        RecipeDto recipe2 = new RecipeDto();
         recipe2.setId(2L);
+        recipe2.setDescription("Recipe 2");
         recipes.add(recipe2);
 
         ArgumentCaptor<Set<Recipe>> argument = ArgumentCaptor.forClass(Set.class);

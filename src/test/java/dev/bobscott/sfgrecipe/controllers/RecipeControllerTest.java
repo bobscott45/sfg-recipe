@@ -1,6 +1,8 @@
 package dev.bobscott.sfgrecipe.controllers;
 
 import dev.bobscott.sfgrecipe.domain.Recipe;
+import dev.bobscott.sfgrecipe.dto.RecipeDto;
+import dev.bobscott.sfgrecipe.mappers.RecipeMapper;
 import dev.bobscott.sfgrecipe.services.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,17 +23,20 @@ public class RecipeControllerTest {
     @Mock
     RecipeService recipeService;
 
+    @Mock
+    RecipeMapper recipeMapper;
+
     RecipeController controller;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        controller = new RecipeController(recipeService);
+        controller = new RecipeController(recipeService, recipeMapper);
     }
 
     @Test
     public void testGetRecipe() throws Exception {
-        Recipe recipe = new Recipe();
+        RecipeDto recipe = new RecipeDto();
         recipe.setId(1L);
 
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();

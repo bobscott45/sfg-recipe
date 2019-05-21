@@ -5,11 +5,10 @@ import dev.bobscott.sfgrecipe.dto.UnitOfMeasureDto;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
 
-import static org.junit.Assert.assertEquals;
 
-
-public class UnitOfMeasureMapperTest {
+public class UnitOfMeasureToDtoTest {
 
     private Long id;
     private String description;
@@ -22,9 +21,18 @@ public class UnitOfMeasureMapperTest {
         description = "A description";
     }
 
+    @Test
+    public void mapNullToDto() {
+        assertNull(UnitOfMeasureMapper.INSTANCE.unitOfMeasureToDto(null));
+    }
 
     @Test
-    public void shouldMapUnitOfMeasureToDto() {
+    public void mapEmptyUnitOfMeasureToDto() {
+        assertNotNull(UnitOfMeasureMapper.INSTANCE.unitOfMeasureToDto(new UnitOfMeasure()));
+    }
+
+    @Test
+    public void mapUnitOfMeasureToDto() {
         UnitOfMeasure uom = new UnitOfMeasure();
         uom.setDescription(description);
         uom.setId(id);
@@ -34,17 +42,4 @@ public class UnitOfMeasureMapperTest {
         assertEquals(id, unitOfMeasureDto.getId());
         assertEquals(description, unitOfMeasureDto.getDescription());
     }
-
-    @Test
-    public void shouldMapDtoToUnitOfMeasure() {
-        UnitOfMeasureDto dto = new UnitOfMeasureDto();
-        dto.setId(id);
-        dto.setDescription(description);
-
-        UnitOfMeasure unitOfMeasure = UnitOfMeasureMapper.INSTANCE.dtoToUnitOfMeasure(dto);
-
-        assertEquals(id, unitOfMeasure.getId());
-        assertEquals(description, unitOfMeasure.getDescription());
-    }
-
 }

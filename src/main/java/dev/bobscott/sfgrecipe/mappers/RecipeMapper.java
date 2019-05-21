@@ -4,11 +4,16 @@ import dev.bobscott.sfgrecipe.domain.Recipe;
 import dev.bobscott.sfgrecipe.dto.RecipeDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
-@Mapper
+import java.util.Set;
+
+@Mapper(componentModel="spring")
 public interface RecipeMapper {
     RecipeMapper INSTANCE = Mappers.getMapper(RecipeMapper.class);
 
     RecipeDto recipeToDto(Recipe recipe);
     Recipe dtoToRecipe(RecipeDto dto);
+
+    Set<RecipeDto> recipeSetToDtoSet(Set<Recipe> recipes);
 }

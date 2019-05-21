@@ -3,6 +3,7 @@ package dev.bobscott.sfgrecipe.dto;
 import dev.bobscott.sfgrecipe.domain.Difficulty;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class RecipeDto {
@@ -113,5 +114,26 @@ public class RecipeDto {
 
     public void setCategories(Set<CategoryDto> categories) {
         this.categories = categories;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RecipeDto recipeDto = (RecipeDto) o;
+        return Objects.equals(getDescription(), recipeDto.getDescription()) &&
+            Objects.equals(getPrepTime(), recipeDto.getPrepTime()) &&
+            Objects.equals(getCookTime(), recipeDto.getCookTime()) &&
+            Objects.equals(getServings(), recipeDto.getServings()) &&
+            Objects.equals(getSource(), recipeDto.getSource()) &&
+            Objects.equals(getUrl(), recipeDto.getUrl()) &&
+            Objects.equals(getDirections(), recipeDto.getDirections()) &&
+            getDifficulty() == recipeDto.getDifficulty() &&
+            Objects.equals(getNote(), recipeDto.getNote());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getDescription(), getPrepTime(), getCookTime(), getServings(), getSource(), getUrl(), getDirections(), getDifficulty(), getNote());
     }
 }

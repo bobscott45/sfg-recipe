@@ -1,6 +1,8 @@
 package dev.bobscott.sfgrecipe.services;
 
 import dev.bobscott.sfgrecipe.domain.Recipe;
+import dev.bobscott.sfgrecipe.dto.RecipeDto;
+import dev.bobscott.sfgrecipe.mappers.RecipeMapper;
 import dev.bobscott.sfgrecipe.repositories.RecipeRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,20 +25,25 @@ public class RecipeServiceImplTest {
     @Mock
     RecipeRepository recipeRepository;
 
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        recipeService = new RecipeServiceImpl(recipeRepository);
+        recipeService = new RecipeServiceImpl(recipeRepository, RecipeMapper.INSTANCE);
     }
 
     @Test
     public void getRecipeList() {
         Set<Recipe> recipeData = new HashSet();
-        recipeData.add(new Recipe());
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        recipe.setDescription("Recipe 1");
+        recipeData.add(recipe);
 
-        when(recipeService.getRecipeList()).thenReturn(recipeData);
+        when(recipeRepository.findAll()).thenReturn(recipeData);
 
         assertEquals(recipeData.size(), recipeService.getRecipeList().size());
+        assertTrue(recipeService.getRecipeList().contains(RecipeMapper.INSTANCE.recipeToDto(recipe)));
 
     }
 
@@ -50,7 +57,7 @@ public class RecipeServiceImplTest {
 
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
 
-        Recipe recipeReturned = recipeService.findById(1L);
+        RecipeDto recipeReturned = recipeService.findById(1L);
 
         assertNotNull("Null recipe", recipeReturned);
         verify(recipeRepository, times(1)).findById(anyLong());
