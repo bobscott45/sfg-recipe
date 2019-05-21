@@ -1,24 +1,11 @@
-package dev.bobscott.sfgrecipe.domain;
+package dev.bobscott.sfgrecipe.dto;
 
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.util.Objects;
 
+public class UnitOfMeasureDto {
 
-@Entity
-public class UnitOfMeasure {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String description;
-
-    public UnitOfMeasure() {
-    }
 
     public Long getId() {
         return id;
@@ -40,7 +27,7 @@ public class UnitOfMeasure {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UnitOfMeasure that = (UnitOfMeasure) o;
+        UnitOfMeasureDto that = (UnitOfMeasureDto) o;
         return Objects.equals(getDescription(), that.getDescription());
     }
 

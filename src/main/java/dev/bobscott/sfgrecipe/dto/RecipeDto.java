@@ -1,50 +1,23 @@
-package dev.bobscott.sfgrecipe.domain;
+package dev.bobscott.sfgrecipe.dto;
 
+import dev.bobscott.sfgrecipe.domain.Difficulty;
 
-
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-public class Recipe {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class RecipeDto {
     private Long id;
-
     private String description;
     private Integer prepTime;
     private Integer cookTime;
     private Integer servings;
     private String source;
     private String url;
-
-    @Lob
     private String directions;
-
-    @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty;
-
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
-    private Set<Ingredient> ingredients = new HashSet<>();
-
-    @Lob
-    private Byte[] image;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private Note note;
-
-
-    @ManyToMany
-    @JoinTable(name="recipe_category",
-        joinColumns = @JoinColumn(name="recipe_id"),
-        inverseJoinColumns = @JoinColumn(name="category_id"))
-
-    private Set<Category> categories = new HashSet<>();
-
-    public Recipe() {
-    }
+    private Set<IngredientDto> ingredients = new HashSet<>();
+    private NoteDto note;
+    private Set<CategoryDto> categories = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -118,36 +91,27 @@ public class Recipe {
         this.difficulty = difficulty;
     }
 
-    public Set<Ingredient> getIngredients() {
+    public Set<IngredientDto> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(Set<Ingredient> ingredients) {
+    public void setIngredients(Set<IngredientDto> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public Byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(Byte[] image) {
-        this.image = image;
-    }
-
-    public Note getNote() {
+    public NoteDto getNote() {
         return note;
     }
 
-    public void setNote(Note note) {
+    public void setNote(NoteDto note) {
         this.note = note;
     }
 
-    public Set<Category> getCategories() {
+    public Set<CategoryDto> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<Category> categories) {
+    public void setCategories(Set<CategoryDto> categories) {
         this.categories = categories;
     }
-
 }

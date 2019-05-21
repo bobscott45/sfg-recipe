@@ -1,19 +1,18 @@
 package dev.bobscott.sfgrecipe.bootstrap;
 
-import dev.bobscott.sfgrecipe.domain.Difficulty;
-import dev.bobscott.sfgrecipe.domain.Ingredient;
-import dev.bobscott.sfgrecipe.domain.Notes;
-import dev.bobscott.sfgrecipe.domain.Recipe;
+import dev.bobscott.sfgrecipe.domain.*;
 import dev.bobscott.sfgrecipe.repositories.CategoryRepository;
 import dev.bobscott.sfgrecipe.repositories.RecipeRepository;
 import dev.bobscott.sfgrecipe.repositories.UnitOfMeasureRepository;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.Optional;
+import java.util.Set;
 
-@Slf4j
+
 @Component
 public class DataLoader implements CommandLineRunner {
 
@@ -31,8 +30,16 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.debug("Loading data...");
+
         Recipe recipe1 = new Recipe();
+        Optional<Category> category = categoryRepository.findByDescription("mexican");
+        if(category.isPresent()) {
+            category.get().getRecipes().add(recipe1);
+            recipe1.getCategories().add(category.get());
+        }
+
+        Set<Category> cats = recipe1.getCategories();
+
         recipe1.setDescription("How to Make Perfect Guacamole");
         recipe1.setSource("Simply Recipes");
         recipe1.setUrl("https://www.simplyrecipes.com/recipes/perfect_guacamole/");
@@ -53,7 +60,7 @@ public class DataLoader implements CommandLineRunner {
         recipe1.getIngredients().add(new Ingredient("cilantro (leaves and tender stems), finely chopped", new BigDecimal(2), unitOfMeasureRepository.findByDescription("tablespoon").get(), recipe1));
         recipe1.getIngredients().add(new Ingredient("freshly grated black pepper", new BigDecimal(1), unitOfMeasureRepository.findByDescription("dash").get(), recipe1));
         recipe1.getIngredients().add(new Ingredient("ripe tomato, seeds and pulp removed, chopped", new BigDecimal(0.5), unitOfMeasureRepository.findByDescription("each").get(), recipe1));
-        recipe1.setNotes(new Notes(recipe1, "Be careful handling chiles if using. Wash your hands thoroughly after handling and do not touch your eyes or the area near your eyes with your hands for several hours."));
+        recipe1.setNote(new Note(recipe1, "Be careful handling chiles if using. Wash your hands thoroughly after handling and do not touch your eyes or the area near your eyes with your hands for several hours."));
         recipeRepository.save(recipe1);
 
         Recipe recipe2 = new Recipe();
@@ -77,7 +84,7 @@ public class DataLoader implements CommandLineRunner {
         recipe2.getIngredients().add(new Ingredient("fresh squeezed orange juice", new BigDecimal(3), unitOfMeasureRepository.findByDescription("tablespoon").get(), recipe2));
         recipe2.getIngredients().add(new Ingredient("olive oil", new BigDecimal(2), unitOfMeasureRepository.findByDescription("tablespoon").get(), recipe2));
         recipe2.getIngredients().add(new Ingredient("skinless, boneless chicken thighs", new BigDecimal(6), unitOfMeasureRepository.findByDescription("each").get(), recipe2));
-        recipe2.setNotes(new Notes(recipe2, "Look for ancho chile powder with the Mexican ingredients at your grocery store, on buy it online. (If you can't find ancho chili powder, you replace the ancho chili, the oregano, and the cumin with 2 1/2 tablespoons regular chili powder, though the flavor won't be quite the same.)"));
+        recipe2.setNote(new Note(recipe2, "Look for ancho chile powder with the Mexican ingredients at your grocery store, on buy it online. (If you can't find ancho chili powder, you replace the ancho chili, the oregano, and the cumin with 2 1/2 tablespoons regular chili powder, though the flavor won't be quite the same.)"));
         recipeRepository.save(recipe2);
 
     }

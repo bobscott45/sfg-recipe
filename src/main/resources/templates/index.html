@@ -3,12 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Recipe Home</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+          crossorigin="anonymous" th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}">
+
+    <script th:src="@{/webjars/jquery/1.12.4/jquery.min.js}"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+
 </head>
 <body>
-    <h1 th:text="'My Recipes Updated'">Index</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary" style="margin-top: 30px">
+                <div class="panel-heading">
+                    <h1 class="panel-title">My Recipes</h1>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        <a href="#" th:href="@{'/recipe/' + ${recipe.id}}" class="list-group-item" th:each="recipe : ${recipes}"><span th:text="${recipe.description}">Super Spicy</span></a>
+                        <a href="#" class="list-group-item" th:remove="all">Tasty Goodness</a>
+                        <a href="#" class="list-group-item" th:remove="all">More Tasty Goodness</a>
+                        <a href="#" class="list-group-item" th:remove="all">Spicy Surprise</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <ul>
-        <li th:each="recipe : ${recipes}"><span th:text="${recipe.description}">recipe name</span></li>
-    </ul>
+</div>
+
+
+
 </body>
 </html>
